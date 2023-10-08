@@ -1,5 +1,6 @@
 // import React from 'react'
 // import styles from './styles.module.css'
+// import "./index.css"
 // import { useEffect, useState } from 'react';
 // import { capitalize, isString, sOrNoS } from '../../../lib/commonUtils';
 // import { ChevronDownIcon, ChevronUpDownIcon, ChevronUpIcon, PlusIcon } from '@heroicons/react/20/solid';
@@ -47,7 +48,7 @@ export const GenericTable = ({ objArray, columns, actions, entityName, onAction 
     setColumnSortDirection({ [column]: direction });
   };
 
-  export const animate = (fn) => {
+  const animate = (fn) => {
     enableAnimations(false);
     fn();
     setTimeout(() => enableAnimations(true), duration);
