@@ -6,7 +6,9 @@ import "./index.css";
 
 import GenericTable from "react-generic-table";
 import "react-generic-table/dist/index.css";
-import LiveProviderBlock from "./components/liveProviderBlock";
+import FullPlayground from "./components/FullPlayground";
+import LiveProviderBlock from "./components/LiveProviderBlock";
+import FullDemo from "./components/FullDemo";
 const scope = { GenericTable };
 
 const packageUrl = "https://npmjs.com/package/react-generic-table";
@@ -228,6 +230,38 @@ const App = () => {
             />
           </div>
         </section>
+
+        <section className="mt-8">
+          <h2 className="mb-2 text-3xl">Advanced Column Configurations</h2>
+          <p className="text-lg">You can also add additional column configurations!</p>
+          <ul className="my-2 ms-4 list-disc p-2 font-medium  ">
+            <li>Custom column names 📝</li>
+            <li>Custom column classnames 📃</li>
+            <li>Custom column capitalization 🏙️ (opt-out)</li>
+          </ul>
+          <LiveProviderBlock
+            scope={scope}
+            code={`
+    <GenericTable
+        objArray={[
+          { id: 1, name: "J.W.", age: "25", profession: "Developer", alive: "yes" },
+          { id: 2, name: "Lea", age: "22", profession: "Journalist", alive: "no" },
+          { id: 3, name: "Max", age: "34", profession: "Taxi Driver", alive: "yes" }
+        ]}
+        columns={[
+          { name: { alias: "Nickname", className: "font-bold" } }, 
+          { age: { className: "text-xs font-semibold rounded bg-red-400 p-2" } },
+          "profession",
+          { alive: { capitalize: false } }
+          ]}
+    />
+            `}
+          />
+        </section>
+
+        <FullPlayground scope={scope} />
+
+        <FullDemo />
       </main>
       <footer className={styles.footer}>
         <span>
