@@ -24,6 +24,8 @@ yarn add --save react-generic-table
 
 ## Usage
 
+[//]: # (TODO: Update Readme for react-generic-table)
+
 ```jsx
 import React, { Component } from 'react'
 
