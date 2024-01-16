@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "run-p start tailwindcss",
-    "tailwindcss": "npx tailwindcss -i ./src/index.css -o ./build/static/css/index.css --watch",
-    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
-    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+    "dev": "run-p reactStart tailwindcss:watch",
+    "build": "run-s reactBuild tailwindcss:build",
+    "tailwindcss:build": "npx tailwindcss -i ./src/index.css -o ./build/static/css/index.css",
+    "tailwindcss:watch": "npx tailwindcss -i ./src/index.css -o ./build/static/css/index.css --watch",
+    "reactStart": "node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "reactBuild": "node ../node_modules/react-scripts/bin/react-scripts.js build",
+    "reactTest": "node ../node_modules/react-scripts/bin/react-scripts.js test",
+    "reactEject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "engines": {
     "node": ">=14.0.0 <=17.0.0"
