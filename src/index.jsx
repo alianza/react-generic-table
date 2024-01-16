@@ -194,7 +194,7 @@ function GenericTableDataRow({ obj, columns, actions, onRowAction }) {
             <div className="rgt-flex rgt-justify-center rgt-gap-2">{formatActions(colName, value)}</div>
           </td>
         ) : (
-          <td key={colName} className='rgt-p-3 sm:rgt-p-4' {...omit(colProps, colPropsToOmit)}>
+          <td key={colName} className="rgt-p-3 sm:rgt-p-4" {...omit(colProps, colPropsToOmit)}>
             <span className={colProps?.className}>
               {colProps?.capitalize === false ? value.toString() : capitalize(value)}
             </span>
