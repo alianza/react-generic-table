@@ -45,7 +45,3 @@
         @apply shadow-2xl m-[2px] rounded focus:ring-2 transition-shadow focus:ring-neutral-500 focus:ring-opacity-50 font-mono #{!important};
     }
 }
-
-.codePreview {
-    @apply mt-8 drop-shadow-2xl;
-}
