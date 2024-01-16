@@ -19,11 +19,7 @@ export default function LiveProviderBlock({ scope, code = "" }) {
           <LiveEditor className={utilStyles.codeEditor} onChange={setCodeState} />
           {codeState !== code && (
             <button className="absolute right-2 top-2">
-              <ArrowPathIcon
-                className="w-8 transition-transform hover:scale-105 active:scale-95 active:duration-150"
-                title="Reset code"
-                onClick={resetCode}
-              />
+              <ArrowPathIcon className={`w-8 ${utilStyles.hoverEffect}`} title="Reset code" onClick={resetCode} />
             </button>
           )}
         </div>
