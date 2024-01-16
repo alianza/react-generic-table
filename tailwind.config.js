@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  prefix: "rgt-tw-",
+  prefix: "rgt-",
   plugins: [],
   theme: {
     extend: {
