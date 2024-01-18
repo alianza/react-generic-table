@@ -29,37 +29,39 @@ function GenericTable({
   onAction = () => {},
   ...options
 }) {
-  const [columnSortDirection, setColumnSortDirection] = useState({});
+  const [columnSortDirection, setColumnSortDirection] = useState({ [columns[0]]: "asc" });
   const [loading, setLoading] = useState(objArray === null);
   const [objArrayState, setObjArrayState] = useState(objArray || []);
   const [tableBody, enableAnimations] = useAutoAnimate();
 
   if (actions?.length) columns = [...columns, "actions"];
 
-  const defaultSort = () => sort(columns[0], "asc"); // Default ascending sort on first column
-
-  useEffect(() => defaultSort(), []);
+  useEffect(() => sort(columns[0], "asc"), []); // Default ascending sort on first column
 
   useEffect(() => {
-    animate(() => {
+    const operations = () => {
       setObjArrayState(objArray || []);
       setLoading(objArray === null);
-      if (objArray) defaultSort();
-    });
+      const [[column, direction]] = Object.entries(columnSortDirection);
+      if (objArray) sort(column, direction); // Sort again if objArray changes
+    };
+
+    objArrayState?.length > objArray?.length ? deAnimate(operations) : operations(); // Disable animations if an item was removed
   }, [objArray]);
 
   const sort = (column, direction) => {
     setObjArrayState((prevObjArrayState) =>
       prevObjArrayState.sort((a, b) => {
-        if (a[column] > b[column]) return direction === "asc" ? 1 : -1;
-        if (a[column] < b[column]) return direction === "asc" ? -1 : 1;
+        const normalize = (value) => (isString(value) ? value.toUpperCase() : value || "");
+        if (normalize(a[column]) > normalize(b[column])) return direction === "asc" ? 1 : -1;
+        if (normalize(a[column]) < normalize(b[column])) return direction === "asc" ? -1 : 1;
         return 0;
       }),
     );
     setColumnSortDirection({ [column]: direction });
   };
 
-  const animate = (fn) => {
+  const deAnimate = (fn) => {
     enableAnimations(false);
     fn();
     setTimeout(() => enableAnimations(true), duration);
@@ -87,17 +89,26 @@ function GenericTable({
                   <div className="rgt-flex rgt-justify-center rgt-gap-2">
                     <p className="rgt-font-bold">{capitalize(colName)}</p>
                     {sorting && !loading && hasItems && (
-                      <div className="rgt-h-6 rgt-w-6 rgt-cursor-pointer">
+                      <>
                         {columnSortDirection[colProp] === "asc" && (
-                          <ChevronDownIcon onClick={() => sort(colProp, "desc")} />
+                          <ChevronDownIcon
+                            className="rgt-h-6 rgt-w-6 rgt-cursor-pointer"
+                            onClick={() => sort(colProp, "desc")}
+                          />
                         )}
                         {columnSortDirection[colProp] === "desc" && (
-                          <ChevronUpIcon onClick={() => sort(colProp, "asc")} />
+                          <ChevronUpIcon
+                            className="rgt-h-6 rgt-w-6 rgt-cursor-pointer"
+                            onClick={() => sort(colProp, "asc")}
+                          />
                         )}
                         {!isActionsColumn && !columnSortDirection[colProp] && (
-                          <ChevronUpDownIcon onClick={() => sort(colProp, "asc")} />
+                          <ChevronUpDownIcon
+                            className="rgt-h-6 rgt-w-6 rgt-cursor-pointer"
+                            onClick={() => sort(colProp, "asc")}
+                          />
                         )}
-                      </div>
+                      </>
                     )}
                   </div>
                 </th>
@@ -153,7 +164,7 @@ function GenericTable({
   );
 }
 
-const colPropsToOmit = ["className", "key", "alias", "capitalize"];
+const colPropsToOmit = ["key", "alias", "capitalize", "onClick"];
 
 function GenericTableDataRow({ obj, columns, actions, onRowAction }) {
   const objColumnMap = {};
@@ -194,8 +205,11 @@ function GenericTableDataRow({ obj, columns, actions, onRowAction }) {
             <div className="rgt-flex rgt-justify-center rgt-gap-2">{formatActions(colName, value)}</div>
           </td>
         ) : (
-          <td key={colName} className="rgt-p-3 sm:rgt-p-4" {...omit(colProps, colPropsToOmit)}>
-            <span className={colProps?.className}>
+          <td key={colName} className="rgt-p-3 sm:rgt-p-4">
+            <span
+              {...omit(colProps, colPropsToOmit)}
+              {...(colProps?.onClick && { onClick: () => colProps?.onClick(obj) })}
+            >
               {colProps?.capitalize === false ? value.toString() : capitalize(value)}
             </span>
           </td>
