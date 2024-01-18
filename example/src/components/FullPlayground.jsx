@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
-import utilStyles from "../utils.module.scss";
 import LiveProviderBlock from "./LiveProviderBlock";
+import AddRemoveButtons from "./AddRemoveButtons";
 
 export default function FullPlayground({ scope }) {
   const [defaultDataState, setDefaultDataState] = useState([
@@ -13,10 +12,7 @@ export default function FullPlayground({ scope }) {
   const [newItemName, setNewItemName] = useState("");
 
   function addNewItem() {
-    if (!newItemName) {
-      alert("Please enter a name for the new item!");
-      return;
-    }
+    if (!newItemName) return alert("Please enter a name for the new item!");
     setDefaultDataState((prevDefaultDataState) => [
       ...prevDefaultDataState,
       {
@@ -43,14 +39,22 @@ export default function FullPlayground({ scope }) {
       objArray={
 ${JSON.stringify(data)}
       }
-      columns={["name", "age", "profession"]}
+      columns={[
+        "id",
+      { name: { alias: "Nickname", className: "font-bold" } }, 
+      { age: { onClick: (obj) => { alert(\`Clicked Age row: \${JSON.stringify(obj)}\`); }, 
+        className: "text-xs font-semibold rounded bg-red-400 p-2 hover:scale-110 inline-block transition-transform cursor-pointer active:scale-95 hover:outline outline-1" 
+       } 
+      },
+      "profession"
+      ]}      
       newLink="#"
       showCount={true}
       entityName="person"
       actionsColumnName="Tasks"
       actions={[
         { edit: () => <a>Edit</a> },
-        { view: (obj) => <a onClick={() => alert(JSON.stringify(obj)) }>Edit</a> },
+        { view: (obj) => <a onClick={() => alert(JSON.stringify(obj)) }>View</a> },
         { delete: () => <a>Delete</a> }
       ]}
       onAction={(action, obj) => {
@@ -73,40 +77,18 @@ ${JSON.stringify(data)}
       <h2 className="mb-2 text-3xl">Full playground</h2>
       <p className="text-lg">
         Play around with the full GenericTable component.{" "}
-        <span className="text-sm">
+        <small>
           (Note: Full table is re-rendered after adding/removing items because of playground code editor setup)
-        </span>
+        </small>
       </p>
       <LiveProviderBlock scope={scope} code={codeState} />
 
-      <div className="my-2 flex gap-4">
-        <button
-          className={`flex items-center gap-2 rounded bg-red-500 p-1 ${utilStyles.hoverEffect}`}
-          onClick={() => removeItem(defaultDataState.length)}
-        >
-          <span className="flex items-center">
-            Remove item <MinusIcon className="w-5" />
-          </span>
-        </button>
-
-        <span className="flex">
-          <input
-            className="w-24 rounded-l text-neutral-900"
-            name="name"
-            placeholder="name"
-            onChange={(e) => setNewItemName(e.target.value)}
-            value={newItemName}
-          />
-          <button
-            className={`flex origin-left items-center gap-2 rounded-r bg-green-500 p-1 ${utilStyles.hoverEffect}`}
-            onClick={addNewItem}
-          >
-            <span className="flex items-center">
-              Add item <PlusIcon className="w-5" />
-            </span>
-          </button>
-        </span>
-      </div>
+      <AddRemoveButtons
+        onRemove={() => removeItem(defaultDataState.length)}
+        onChange={(e) => setNewItemName(e.target.value)}
+        value={newItemName}
+        onAdd={addNewItem}
+      />
     </section>
   );
 }

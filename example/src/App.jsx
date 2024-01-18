@@ -97,11 +97,12 @@ const App = () => {
         </section>
 
         <section className="mt-8">
-          <h2 className="mb-2 text-3xl">Action column support</h2>
-          <p className="text-lg">You can also add an action column with custom actions!</p>
+          <h2 className="mb-2 text-3xl">Simple action column support</h2>
+          <p className="text-lg">You can also add an action column with custom actions to each row!</p>
           <ul className="my-2 ms-4 list-disc p-2 font-medium  ">
             <li>Add multiple actions per row 🧮</li>
             <li>Actions have access to the row data 💾</li>
+            <li>Useful for links, buttons, icons, etc. 🖱️</li>
           </ul>
           <LiveProviderBlock
             scope={scope}
@@ -118,15 +119,14 @@ const App = () => {
           { view: (obj) => <a href={'#/' + obj.id}>View</a> }
         ]}
         entityName="person"
-        actionsColumnName="Tasks"
         showCount={true}
     />
-            `}
+                `}
           />
         </section>
 
         <section className="mt-8">
-          <h2 className="mb-2 text-3xl">Action column support</h2>
+          <h2 className="mb-2 text-3xl">Advanced action column configuration</h2>
           <p className="text-lg">You can also add an action column with custom actions!</p>
           <ul className="my-2 ms-4 list-disc p-2 font-medium  ">
             <li>Add multiple actions per row 🧮</li>
@@ -134,6 +134,7 @@ const App = () => {
             <li>Actions have access to the row data 💾</li>
             <li>Actions can be async 🚀</li>
             <li>Optional callback function for more complex individual action handling like Api calls etc. 🛜</li>
+            <li>Customize the actions column name 📝</li>
           </ul>
           <LiveProviderBlock
             scope={scope}
@@ -146,6 +147,7 @@ const App = () => {
         ]}
         columns={["name", "age", "profession"]}
         newLink="#"
+        actionsColumnName="Tasks"
         actions={[
           { edit: () => <a>Edit</a> },
           { view: () => <a>View</a> },
@@ -179,11 +181,11 @@ const App = () => {
           <LiveProviderBlock
             scope={scope}
             code={`
-    <GenericTable
-        objArray={null}
-        columns={["name", "age", "profession"]}
-    />
-            `}
+        <GenericTable
+            objArray={null}
+            columns={["name", "age", "profession"]}
+        />
+                `}
           />
         </section>
 
@@ -192,6 +194,7 @@ const App = () => {
           <p className="text-lg">Empty state built-in!</p>
           <ul className="my-2 ms-4 list-disc p-2 font-medium  ">
             <li>Empty state when no data is available (empty array) 📭</li>
+            <li>Customizable empty state message by indicating the entity name 📝</li>
           </ul>
 
           <LiveProviderBlock
@@ -201,6 +204,7 @@ const App = () => {
         objArray={[]}
         columns={["name", "age", "profession"]}
         newLink="#"
+        entityName="person"
     />
             `}
           />
@@ -216,11 +220,11 @@ const App = () => {
             <GenericTable
               className="drop-shadow-xl"
               objArray={[
-                { id: 1, name: "J.W.", age: "25", profession: "Developer", salary: "1000" },
-                { id: 2, name: "Lea", age: "22", profession: "Journalist", salary: "2000" },
-                { id: 3, name: "Max", age: "34", profession: "Taxi Driver", salary: "3000" },
+                { id: 1, name: "J.W.", age: 25, profession: "Developer", salary: "1000" },
+                { id: 2, name: "Lea", age: 22, profession: "Journalist", salary: "2000" },
+                { id: 3, name: "Max", age: 34, profession: "Taxi Driver", salary: "3000" },
               ]}
-              columns={["name", "age", "profession", "salary"]}
+              columns={["id", "name", "age", "profession", "salary"]}
               actions={[
                 { edit: (obj) => <a onClick={() => alert("Edit:" + JSON.stringify(obj))}>Edit</a> },
                 { view: (obj) => <a onClick={() => alert("View:" + JSON.stringify(obj))}>View</a> },
@@ -236,8 +240,9 @@ const App = () => {
           <p className="text-lg">You can also add additional column configurations!</p>
           <ul className="my-2 ms-4 list-disc p-2 font-medium  ">
             <li>Custom column names 📝</li>
-            <li>Custom column classnames 📃</li>
+            <li>Custom column class names 📃</li>
             <li>Custom column capitalization 🏙️ (opt-out)</li>
+            <li>Custom column handlers & props (With access to full object) 🖱️</li>
           </ul>
           <LiveProviderBlock
             scope={scope}
@@ -250,11 +255,14 @@ const App = () => {
         ]}
         columns={[
           { name: { alias: "Nickname", className: "font-bold" } }, 
-          { age: { className: "text-xs font-semibold rounded bg-red-400 p-2" } },
-          "profession",
-          { alive: { capitalize: false } }
+          { age: { onClick: (obj) => { alert(\`Clicked Age row: \${JSON.stringify(obj)}\`); }, 
+            className: "text-xs font-semibold rounded bg-red-400 p-2 hover:scale-110 inline-block transition-transform cursor-pointer active:scale-95 hover:outline outline-1" 
+           } 
+          },
+          { profession: { capitalize: false }, style: { fontFamily: 'Times New Roman'  } },
+          { alive: { capitalize: false, style: { fontFamily: 'Times New Roman' } } }
           ]}
-    />
+    />;
             `}
           />
         </section>

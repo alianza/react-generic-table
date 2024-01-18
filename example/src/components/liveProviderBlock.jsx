@@ -13,7 +13,7 @@ export default function LiveProviderBlock({ scope, code = "" }) {
   const resetCode = () => setCodeState(code);
 
   return (
-    <div className="flex flex-col items-center gap-8 overflow-y-hidden py-4">
+    <div className="flex flex-col items-center gap-12 overflow-y-hidden py-4">
       <LiveProvider scope={scope} code={codeState}>
         <div className="relative">
           <LiveEditor className={utilStyles.codeEditor} onChange={setCodeState} />
