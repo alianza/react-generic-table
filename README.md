@@ -75,6 +75,7 @@ Columns can be specified as an array of strings or objects. If specified as a st
 * 🚀 Simple syntax  
 * ⚙️ Minimal config  
 * 🎨 Customizable  
+* 🌙 Supports Dark Mode
 * 🔍 Out-of-the-box sorting  
 * ⌛ Built-in loading state  
 * 📭 Built-in empty state  
