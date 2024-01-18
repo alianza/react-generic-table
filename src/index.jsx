@@ -21,6 +21,7 @@ const duration = 250; // default auto-animate duration
  * @returns {JSX.Element} - Generic table component
  * @constructor - GenericTable
  */
+
 function GenericTable({
   objArray = null,
   columns = [],
