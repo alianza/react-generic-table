@@ -1,6 +1,6 @@
 {
   "name": "react-generic-table",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Easily &amp; Beautifully create scroll transitions in react!",
   "homepage": "https://alianza.github.io/react-generic-table/",
   "author": "alianza",
@@ -9,9 +9,6 @@
   "main": "dist/index.jsx",
   "module": "dist/index.modern.js",
   "source": "src/index.jsx",
-  "engines": {
-    "node": ">=16.0.0 <=17.0.0"
-  },
   "scripts": {
     "dev": "run-p start tailwindcss",
     "build": "microbundle-crl --no-compress --format modern,cjs",

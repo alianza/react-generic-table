@@ -13,9 +13,6 @@
     "reactTest": "node ../node_modules/react-scripts/bin/react-scripts.js test",
     "reactEject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
-  "engines": {
-    "node": ">=16.0.0 <=17.0.0"
-  },
   "dependencies": {
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
